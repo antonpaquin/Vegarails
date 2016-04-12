@@ -1,2 +1,10 @@
-<h1>Home#show</h1>
-<p>Find me in app/views/home/show.html.erb</p>
+<div class="vc">
+  <% @services[:self].each do |service| %>
+    <div class="imgbox"><%= image_tag('/home/' + service + '.png') %></div>
+  <% end %>
+</div>
+<div class="vc" style="margin-top: 50px;">
+  <% @services[:third].each do |service| %>
+    <div class="imgbox"><%= image_tag('/home/' + service + '.png') %></div>
+  <% end %>
+</div>

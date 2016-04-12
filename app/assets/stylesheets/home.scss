@@ -1,3 +1,30 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+img {
+	height: 100%;
+	width: auto;
+}
+html {
+  /*wtf rails? height is getting fucked up*/
+  height: 100%;
+}
+body {
+	background: #444444;
+	text-align: center;
+  height: 100%;
+  margin: 0px;
+}
+
+.vc {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.imgbox {
+	display: inline-block;
+	height: 100px;
+	width: 100px;
+	margin-left: 25px;
+	margin-right: 25px;
+}
