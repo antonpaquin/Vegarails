@@ -8,7 +8,7 @@
 
 
 services = [
-  #Name         #Category
+#  Name         Category
   ['Anime',     0],
   ['Manga',     0],
   ['Webcomics', 0],
@@ -19,23 +19,25 @@ services = [
 ]
 
 anime = [
-  #Name           #Count
+#  Name           Count
   ['TestAnime',   1]
 ]
 
 anime_episodes = [
-  #Name             #Length   #Season   #Episode  #Watched  #File
-  ['TestEpisode',   '25:00',  1,        1,        true,     '/home/pi/drive/*']
+#  Name             Anime_id   Length   Season   Episode  Watched  File
+  ['TestEpisode',   1,         '25:00', 1,       1,       true,    '/home/pi/drive/*']
 ]
 
 services.each do |name, category|
   Service.create(:name => name, :category => category)
 end
 
+
 anime.each do |name, count|
   Anime.create(:name => name, :count => count)
 end
 
-anime_episodes.each do |name, length, season, episode, watched, file|
-  AnimeEpisode.create(:name => name, :length => length, :season => season, :episode => episode, :watched => watched, :file => file)
+
+anime_episodes.each do |name, anime_id, length, season, episode, watched, file|
+  Aniepisode.create(:name => name, :anime_id => anime_id, :length => length, :season => season, :episode => episode, :watched => watched, :file => file)
 end

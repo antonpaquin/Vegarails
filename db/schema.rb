@@ -11,9 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415173633) do
+ActiveRecord::Schema.define(version: 20160415201132) do
 
-  create_table "anime_episodes", force: :cascade do |t|
+  create_table "aniepisodes", force: :cascade do |t|
+    t.integer  "anime_id"
     t.string   "name"
     t.string   "length"
     t.integer  "season"

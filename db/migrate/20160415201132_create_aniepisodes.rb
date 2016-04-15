@@ -1,7 +1,7 @@
-class CreateAnimeEpisodes < ActiveRecord::Migration
+class CreateAniepisodes < ActiveRecord::Migration
   def change
-    create_table :anime_episodes do |t|
-      t.belongs_to :customer, index: true
+    create_table :aniepisodes do |t|
+      t.integer :anime_id
       t.string :name
       t.string :length
       t.integer :season

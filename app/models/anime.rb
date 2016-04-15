@@ -1,3 +1,3 @@
 class Anime < ActiveRecord::Base
-  has_many :animeepisodes
+  has_many :aniepisodes
 end

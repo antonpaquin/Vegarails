@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AnimeEpisodeTest < ActiveSupport::TestCase
+class AniepisodeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
