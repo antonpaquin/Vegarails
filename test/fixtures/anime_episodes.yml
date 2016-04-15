@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  length: MyString
+  season: 1
+  episode: 1
+  watched: false
+  file: MyString
+
+two:
+  name: MyString
+  length: MyString
+  season: 1
+  episode: 1
+  watched: false
+  file: MyString
