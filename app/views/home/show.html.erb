@@ -1,6 +1,6 @@
 <div class="vc">
   <% @services[:self].each do |service| %>
-    <div class="imgbox"><%= image_tag('/home/' + service + '.png') %></div>
+    <div class="imgbox"><%= link_to image_tag('/home/' + service + '.png'), :action => 'index', :controller => service.downcase %></div>
   <% end %>
 </div>
 <div class="vc" style="margin-top: 50px;">

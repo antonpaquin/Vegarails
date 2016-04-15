@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  get 'settings/index'
+
+  get 'webcomics/index'
+
+  get 'ftp/index'
+
+  get 'manga/index'
+
+  get 'anime/index'
+
+  get 'anime/add'
+
+  get 'anime/delete'
+
+  get 'anime/edit'
+
+  get 'anime/show'
+
+  get 'anime/stats'
+
   get 'home/show' => 'home#show'
   root 'home#show'
 
