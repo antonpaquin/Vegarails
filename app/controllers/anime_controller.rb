@@ -1,5 +1,7 @@
 class AnimeController < ApplicationController
   def index
+    @anime = Anime.all;
+    #Sort anime somehow so that first things are first
   end
 
   def add

@@ -1,3 +1,51 @@
 // Place all the styles related to the Anime controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+	text-align: center;
+	background: #444444;
+}
+
+.grid {
+	width: 90%;
+	margin-top: 3%;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+
+.col {
+	width: 44%;
+	float: left;
+	margin-right: 3%;
+	margin-left: 3%;
+}
+
+.box {
+	height: 430px;
+	margin-bottom: 10%;
+	background-size: cover;
+	box-shadow: 3px 3px 3px #222222;
+	border: 2px solid #222222;
+	border-radius: 5px;
+}
+
+.title {
+	font-size: 36px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	text-shadow: 0 0 6px #FFFFFF;
+	font-family: bolonewt;
+}
+
+.subtext {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-shadow: 0 0 4px #FFFFFF;
+}
+
+@font-face {
+	font-family: bolonewt;
+	src: font-url('Bolonewt.otf');
+}
