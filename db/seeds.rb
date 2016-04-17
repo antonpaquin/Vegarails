@@ -27,7 +27,7 @@ anime = [
 ]
 
 def plexform(name, ep, season)
-  '/home/pi/drive/Media/Anime/' + name + '/Season 0' + season + '/' + name + ' - s0' + season + 'e0' + ep + '.mkv'
+  '/Media/Anime/' + name + '/Season 0' + season + '/' + name + ' - s0' + season + 'e0' + ep + '.mkv'
 end
 anime_episodes = [
 #  Name                                Anime_id   Length   Season   Episode  Watched  File

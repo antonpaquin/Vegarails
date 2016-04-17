@@ -1,22 +1,16 @@
+<% javascript_include_tag 'jquery.mThumbnailScroller.js' %>
+<% stylesheet_link_tag 'jquery.mThumbnailScroller.css' %>
 <div class="grid">
+  <% [0,1].each do |i| %>
 	<div class="col">
-  <% @anime.each_slice(2).map(&:first).each do |a| %>
-		<div class="box" style="background-image:url('/anime/<%= a.name %>/box.jpg')">
-			<p class="title"><%= a.name %></p>
+  <% @anime.each_slice(2) do |a| %>
+		<div class="box" style="background-image:url('/anime/<%= a[i].name %>/box.jpg')">
+			<p class="title"><%= a[i].name %></p>
 			<div class="thumbrow">
 				<!-- imgs -->
 			</div>
 		</div>
     <% end %>
-	</div>
-	<div class="col">
-    <% @anime.each_slice(2).map(&:last).each do |a| %>
-  		<div class="box" style="background-image:url('/anime/<%= a.name %>/box.jpg')">
-  			<p class="title"><%= a.name %></p>
-  			<div class="thumbrow">
-  				<!-- imgs -->
-  			</div>
-  		</div>
-      <% end %>
-	</div>
+  </div>
+  <% end %>
 </div>
