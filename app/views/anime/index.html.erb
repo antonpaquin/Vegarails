@@ -1,3 +1,4 @@
+<% require 'uri' %>
 <% javascript_include_tag 'jquery.mThumbnailScroller.js' %>
 <% stylesheet_link_tag 'jquery.mThumbnailScroller.css' %>
 <div class="grid">
@@ -6,10 +7,16 @@
   <% @anime.each_slice(2) do |a| %>
 		<div class="box" style="background-image:url('/anime/<%= a[i].name %>/box.jpg')">
 			<p class="title"><%= a[i].name %></p>
-			<div class="thumbrow">
-				<!-- imgs -->
-			</div>
 		</div>
+    <div class="thumbrow mThumbnailScroller" id="<%= a[i].name.delete(' ') %>ThumbRow" data-mts-axis="x" data-mts-type="click-100" data-mts-theme="buttons-out">
+      <ul>
+      <% a[i].aniepisodes.each do |e| %>
+        <li><a href='<%= "vlc:\"http://ohayo.vega.local"+ URI.escape(e.file) + "\""%>'>
+          <%= image_tag('/anime/' + a[i].name + '/ep' + e.episode.to_s + '.jpg', :class => "thumbImg" + (e.watched ? '' : ' unseen')) %></a>
+        </li>
+      <% end %>
+      </ul>
+    </div>
     <% end %>
   </div>
   <% end %>

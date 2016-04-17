@@ -23,12 +23,15 @@ body {
 }
 
 .box {
+  position: relative;
 	height: 430px;
-	margin-bottom: 10%;
+	margin-bottom: 0px;
 	background-size: cover;
 	box-shadow: 3px 3px 3px #222222;
-	border: 2px solid #222222;
-	border-radius: 5px;
+	border: 2px #222222;
+  border-style: solid solid none solid;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .title {
@@ -45,6 +48,25 @@ body {
 	text-shadow: 0 0 4px #FFFFFF;
 }
 
+.thumbrow {
+  overflow: auto;
+  height: auto;
+  margin-bottom: 10%;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: 3px 3px 3px #222222;
+  border: 2px #222222;
+  border-style: none solid solid solid;
+}
+
+.thumbImg {
+  width: 100px;
+  height: auto;
+}
+
+.unseen {
+  border: 1px solid #FF0000;
+}
 @font-face {
 	font-family: bolonewt;
 	src: font-url('Bolonewt.otf');
