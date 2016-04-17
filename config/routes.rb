@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'settings/index'
 
+  get 'settings/authenticate'
+
   get 'webcomics/index'
 
   get 'ftp/index'
@@ -9,7 +11,9 @@ Rails.application.routes.draw do
 
   get 'anime/index'
 
-  get 'anime/add'
+  post 'anime/add'
+
+  post 'anime/addEpisode'
 
   get 'anime/delete'
 
