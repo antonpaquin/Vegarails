@@ -5,6 +5,7 @@
   <% [0,1].each do |i| %>
 	<div class="col">
   <% @anime.each_slice(2) do |a| %>
+    <% begin %>
 		<div class="box" style="background-image:url('/anime/<%= a[i].name %>/box.jpg')">
 			<p class="title"><%= a[i].name %></p>
 		</div>
@@ -12,11 +13,13 @@
       <ul>
       <% a[i].aniepisodes.each do |e| %>
         <li><a href='<%= "vlc:\"http://ohayo.vega.local"+ URI.escape(e.file) + "\""%>'>
-          <%= image_tag('/anime/' + a[i].name + '/ep' + e.episode.to_s + '.jpg', :class => "thumbImg" + (e.watched ? '' : ' unseen')) %></a>
+          <%= image_tag('/anime/' + a[i].name + '/s' + e.season.to_s.rjust(2,'0') + 'e' + e.episode.to_s.rjust(2,'0') + '.jpg', :class => "thumbImg" + (e.watched ? '' : ' unseen')) %></a>
         </li>
       <% end %>
       </ul>
     </div>
+    <% rescue %>
+    <% end %>
     <% end %>
   </div>
   <% end %>

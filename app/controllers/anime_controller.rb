@@ -7,14 +7,30 @@ class AnimeController < ApplicationController
   end
 
   def add
-    @anime = Anime.new(params[:anime])
+    begin
+      @anime = Anime.create(
+        :name => params[:name],
+        :count => 0
+      )
+      @success = true
+    rescue
+      @success = false
+    end
+    render :add, :layout => false
   end
 
   def addEpisode
     begin
+      if params[:anime_id] != nil
+        id = params[:anime_id]
+      elsif params[:anime_name] != nil
+        id = Anime.where(name: params[:anime_name]).take.id
+      else
+        id = 0
+      end
       Aniepisode.create(
         :name => params[:name],
-        :anime_id => params[:anime_id],
+        :anime_id => id,
         :length => params[:length],
         :season => params[:season],
         :episode => params[:episode],
