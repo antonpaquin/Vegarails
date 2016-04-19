@@ -12,7 +12,7 @@ def doMove(name, season, episode, src):
 
 torrents = [f for f in os.listdir('/home/pi/drive/torrents/Anime-bot/complete') if f[0:14] == '[HorribleSubs]']
 
-data = [(t[15:t.find('-')-1], int(t[-13:-11]), t) for t in torrents]
+data = [(t[15:-16], int(t[-13:-11]), t) for t in torrents]
 
 confFile = open('/var/www/html/Vegarails/support/torrentPaths.txt','r')
 conf = {}
