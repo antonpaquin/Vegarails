@@ -2,6 +2,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
+os.chdir('/var/www/html/Vegarails/support/RSS downloader')
 def main():
     openHistory()
     chain(
@@ -39,7 +40,7 @@ def foreach(*funcs):
             res.append(chain(*funcs, arg=n))
         return res
     return f
-        
+
 def getSources():
     #get all the rss links to crawl
     f = open('sources/nyaa.txt','r')
@@ -51,10 +52,11 @@ def sourceToPage(link):
 
 def pageToSoup(text):
     #from a bunch of xml, return a BS4 soup object
-    return BeautifulSoup(text)
+    return BeautifulSoup(text, "html.parser")
 
 def soupToItems(soup):
     #given a nyaa rss feed thing, get all the items in it
+    print(soup.prettify())
     return soup.channel.findAll('item')
 
 uniqueName = ''
@@ -71,6 +73,7 @@ def checkUniqueItem(item):
 def getTorrentLink(item):
     #given a nyaa rss feed item, pull the DL link to the torrent from it
     if item:
+        print('getTorrentLink')
         return item.link.string
     else:
         return False
@@ -78,6 +81,7 @@ def getTorrentLink(item):
 def downloadTorrentFile(link):
     #given a torrent link, save it as a file
     if link:
+        print('downloadTorrentFile')
         fname = generateFileName('torrent')
         f = open(fname,'wb')
         f.write(requests.get(link).content)
@@ -88,6 +92,7 @@ def downloadTorrentFile(link):
 
 def saveUniqueItem(unique):
     if unique:
+        print('saveUniqueItem')
         uniqueTable.add(uniqueName)
     else:
         pass #object is in table
@@ -112,3 +117,5 @@ def generateFileName(extension):
         return 'files/' + str(n+1) + '.' + extension
     else:
         return 'files/' + '1.' + extension
+
+main()

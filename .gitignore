@@ -21,3 +21,7 @@
 
 #Holy fuck I've got a lot of shit in /anime
 /public/anime/*
+
+#Random torrents probably shouldn't be in VC
+/public/support/RSS\ downloader/files/*
+/public/support/RSS\ downloader/history.txt
