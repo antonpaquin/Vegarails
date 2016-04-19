@@ -1,3 +1,5 @@
+#THIS IS SHITTY CODE! IT WAS ONLY MEANT TO BE USED ONCE. REWRITE IT IF YOU NEED TO USE IT!
+raise
 import requests
 import os
 from bs4 import BeautifulSoup
