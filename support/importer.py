@@ -27,7 +27,7 @@ def buildJSON():
             for episode in episodes:
                 epNum = int(episode[-6:-4])
                 frmat = episode[-3:]
-                epName = episode[:-13]
+                epName = tvdb.getEpisodeName(shName, seNum, epNum)
                 epThumb = tvdb.getThumbUrl(shName, seNum, epNum)
                 episodesL.append({
                     'number':epNum,
