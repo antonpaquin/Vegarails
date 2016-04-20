@@ -1,3 +1,5 @@
 Owarimonogatari=Monogatari|4
 Bakuon!!=Bakuon|1
 Pan de Peace!=Pan de Peace|1
+Utawarerumono - Itsuwari no Kamen=Utawarerumono|1
+Mobile Suit Gundam - Iron-Blooded Orphans=Mobile Suit Gundam: Iron-Blooded Orphans|1
