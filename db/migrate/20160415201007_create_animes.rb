@@ -2,7 +2,7 @@ class CreateAnimes < ActiveRecord::Migration
   def change
     create_table :animes do |t|
       t.string :name
-      t.integer :count
+      t.integer :tvdb_id
 
       t.timestamps null: false
     end

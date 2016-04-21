@@ -1,7 +1,5 @@
 class AnimeController < ApplicationController
   protect_from_forgery with: :null_session
-  #skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-
 
   def index
     @anime = Anime.all;
@@ -12,7 +10,7 @@ class AnimeController < ApplicationController
     begin
       @anime = Anime.create(
         :name => params[:name],
-        :count => 0
+        :tvdb_id => params[:id]
       )
       @success = true
     rescue
@@ -48,10 +46,51 @@ class AnimeController < ApplicationController
 
   def sync
     begin
-      @json = JSON.parse params[:shows]
+      require 'open-uri'
+      json = JSON.parse params[:shows]
+      #Beautiful!
+      inDb = {} #List of shows already in the db
+      ids = {} #Way to get an ID from a name with fewer DB lookups
+      Anime.find_each do |a| #For all shows
+        ids[a.name] = a.id
+        inDb[a.name] = {}
+        Aniepisode.where(anime_id: a.id).find_each do |e| #for all episodes under that show
+          if not inDb[a.name].key?(e.season)
+            inDb[a.name][e.season] = Set.new []
+          end
+          inDb[a.name][e.season].add(e.episode) #stick each ep number in an unordered set
+        end
+      end
+      json.each do |a|
+        #If the anime isn't in the DB, add it (and put its ID in ids)
+        if Anime.where(name: a['name']).take == nil
+          Anime.create(:name => a['name'], :tvdb_id => a['tvdb_id'])
+          ids[a['name']] = Anime.where(name: a['name']).take.id
+          Dir.mkdir('/var/www/html/Vegarails/public/anime/'+a['name'])
+          begin
+            open('/var/www/html/Vegarails/public/anime/'+a['name']+'/box.jpg', 'wb') do |file|
+              file << open(a['thumb_url']).read
+            end
+          rescue
+          end
+        end
+        a['seasons'].each do |s|
+          s['episodes'].each do |e|
+            if Aniepisode.where(anime_id: ids[a['name']], season: s['number'], episode: e['number']).take == nil
+              doSyncEpisode(a, s, e, ids)
+            end
+          end
+        end
+      end
+
+      #Pull db -- get a list of all shows [ seasons [ episodes]] --> verification array
+      #json.each do add/update db, remove from verification array
+      #verification arrray.each do remove from db
       @success = true
-    rescue
+    rescue Exception => e
       @success = false
+      @error = e.message
+      @trace = e.backtrace.inspect
     end
     render :sync, :layout => false
   end
@@ -66,5 +105,29 @@ class AnimeController < ApplicationController
   end
 
   def stats
+  end
+
+  # Not actions!
+  def doSyncEpisode(anime, season, episode, ids)
+    require 'open-uri'
+    sNum = season['number'].to_s.rjust(2,'0')
+    eNum = episode['number'].to_s.rjust(2,'0')
+    frm = episode['format']
+    aName = anime['name']
+    Aniepisode.create(
+      :name => episode['name'],
+      :anime_id => ids[anime['name']],
+      :length => 0,
+      :season => season['number'],
+      :episode => episode['number'],
+      :watched => false,
+      :file => "/Media/Anime/#{aName}/Season #{sNum}/#{aName} - s#{sNum}e#{eNum}.#{frm}"
+      )
+    begin
+      open("/var/www/html/Vegarails/public/anime/#{aName}/s#{sNum}e#{eNum}.jpg", 'wb') do |file|
+        file << open(episode['thumb_url']).read
+      end
+    rescue
+    end
   end
 end

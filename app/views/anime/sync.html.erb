@@ -1,6 +1,8 @@
 <% if @success %>
-Success!
+Success!<br/><br/>
 <% else %>
-Failed!
+Failed!<br/>
+<%= @error %><br/>
+<%= @trace %>
 <% end %>
-<%= @json %>
+<%= @idMap %>

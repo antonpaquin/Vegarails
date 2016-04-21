@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160415201132) do
 
   create_table "animes", force: :cascade do |t|
     t.string   "name"
-    t.integer  "count"
+    t.integer  "tvdb_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -56,7 +56,6 @@ def pageToSoup(text):
 
 def soupToItems(soup):
     #given a nyaa rss feed thing, get all the items in it
-    print(soup.prettify())
     return soup.channel.findAll('item')
 
 uniqueName = ''
@@ -73,7 +72,6 @@ def checkUniqueItem(item):
 def getTorrentLink(item):
     #given a nyaa rss feed item, pull the DL link to the torrent from it
     if item:
-        print('getTorrentLink')
         return item.link.string
     else:
         return False
@@ -81,7 +79,7 @@ def getTorrentLink(item):
 def downloadTorrentFile(link):
     #given a torrent link, save it as a file
     if link:
-        print('downloadTorrentFile')
+        print('New: ' + uniqueName)
         fname = generateFileName('torrent')
         f = open(fname,'wb')
         f.write(requests.get(link).content)
@@ -92,7 +90,6 @@ def downloadTorrentFile(link):
 
 def saveUniqueItem(unique):
     if unique:
-        print('saveUniqueItem')
         uniqueTable.add(uniqueName)
     else:
         pass #object is in table
