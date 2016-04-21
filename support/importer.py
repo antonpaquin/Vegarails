@@ -1,21 +1,23 @@
 import os
 import requests
 import tvdb
+import json
 
 animeDir = '/home/pi/drive/Media/Anime'
-syncEndPoint = 'http://vega.local/Anime/sync'
+syncEndPoint = 'http://vega.local/anime/sync'
 
 os.chdir(animeDir)
 
 def main():
     data = buildJSON()
-    requests.post(syncEndpoint, data)
+    r = requests.post(syncEndPoint, {'shows':json.dumps(data)})
+    log = open('/var/www/html/Vegarails/support/importerLog.html','w')
+    log.write(r.text)
+    log.close()
 
 def buildJSON():
     shows = os.listdir(animeDir)
-    json = {
-        'shows': []
-    }
+    jdat = []
     for show in shows:
         shName = show
         seasons = [f for f in os.listdir(animeDir + '/' + show) if f != 'Specials']
@@ -28,7 +30,7 @@ def buildJSON():
                 epNum = int(episode[-6:-4])
                 frmat = episode[-3:]
                 epName = tvdb.getEpisodeName(shName, seNum, epNum)
-                epThumb = tvdb.getThumbUrl(shName, seNum, epNum)
+                epThumb = tvdb.getEpisodeThumb(shName, seNum, epNum)
                 episodesL.append({
                     'number':epNum,
                     'format':frmat,
@@ -39,13 +41,13 @@ def buildJSON():
                 'number':seNum,
                 'episodes':episodesL
             })
-        data['shows'].append({
+        jdat.append({
             'name':shName,
             'thumb_url':tvdb.getShowThumb(shName),
             'tvdb_id':tvdb.getTvdbId(shName),
             'seasons':seasonsL
         })
-    return json
+    return jdat
 
 main()
 

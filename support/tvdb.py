@@ -7,9 +7,10 @@ import sys
 
 api_key = '8A508F4E2D203BF4'
 sys.setrecursionlimit(3500) #Allow pickling some very nested structures
+tvdb_file = '/var/www/html/Vegarails/support/tvdb.pk'
 
 try:
-    f = open('tvdb.pk','rb')
+    f = open(tvdb_file,'rb')
     localCache = pickle.load(f)
 except Exception:
     print('TVDB localCache empty, initializing empty')
@@ -21,12 +22,14 @@ def getEpisodeThumb(show, season, episode):
     verifyCache(show, season, episode)
     if localCache[show]['seasons'][season]['episodes'][episode]['thumb_url'] == '':
         populate(show)
+    verifyCache(show, season, episode)
     return localCache[show]['seasons'][season]['episodes'][episode]['thumb_url']
 
 def getShowThumb(show):
     verifyCache(show)
     if localCache[show]['box_url'] == '':
         populate(show)
+    verifyCache(show)
     return localCache[show]['box_url']
 
 def getTvdbId(show):
@@ -41,12 +44,14 @@ def getTvdbId(show):
         #basically included the whole downloaded file from TVDB. Force
         #everything to absolutely be a primitive no matter what, problem goes
         #away.
+    verifyCache(show)
     return localCache[show]['id']
 
 def getEpisodeName(show, season, episode):
     verifyCache(show, season, episode)
     if localCache[show]['seasons'][season]['episodes'][episode]['name'] == '':
         populate(show)
+    verifyCache(show, season, episode)
     return localCache[show]['seasons'][season]['episodes'][episode]['name']
 
 def verifyCache(show, season=-1, episode=-1):
@@ -89,16 +94,17 @@ def populate(show):
         localCache[show]['seasons'][int(season)+0] = {'episodes':{}}
         episodes = [e for e in data.find_all('episode') if int(e.seasonnumber.string) == season]
         for episode in episodes:
-            number = int(episode.episodenumber.string)
-            epName = episode.episodename.string
-            epThumb = 'http://thetvdb.com/banners/'+episode.filename.string
+            number = int(episode.episodenumber.string)+0
+            epName = str(episode.episodename.string)[:]
+            epThumb = 'http://thetvdb.com/banners/'+str(episode.filename.string)[:]
             localCache[show]['seasons'][season]['episodes'][int(number)+0] = {
                 'name':str(epName)[:],
                 'thumb_url':str(epThumb)[:]
             }
+    close()
 
 def close():
-    f = open('tvdb.pk','wb')
+    f = open(tvdb_file,'wb')
     pickle.dump(localCache, f)
     f.close()
 '''

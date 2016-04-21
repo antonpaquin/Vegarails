@@ -1,5 +1,7 @@
 class AnimeController < ApplicationController
   protect_from_forgery with: :null_session
+  #skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
+
 
   def index
     @anime = Anime.all;
@@ -42,6 +44,16 @@ class AnimeController < ApplicationController
         @success = false
       end
       render :addEpisode, :layout => false
+  end
+
+  def sync
+    begin
+      @json = JSON.parse params[:shows]
+      @success = true
+    rescue
+      @success = false
+    end
+    render :sync, :layout => false
   end
 
   def delete
