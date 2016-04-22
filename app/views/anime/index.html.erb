@@ -9,7 +9,7 @@
 		<div class="box" style="background-image:url('/anime/<%= a[i].name %>/box.jpg')">
 			<p class="title"><%= a[i].name %></p>
 		</div>
-    <div class="thumbrow mThumbnailScroller" id="<%= a[i].name.delete(' ') %>ThumbRow" data-mts-axis="x" data-mts-type="click-100" data-mts-theme="buttons-out">
+    <div class="thumbrow mThumbnailScroller" id="<%= a[i].name.delete(' ') %>ThumbRow">
       <ul>
       <% a[i].aniepisodes.each do |e| %>
         <li><a href='<%= "vlc:\"http://ohayo.vega.local"+ URI.escape(e.file) + "\""%>'>
@@ -18,6 +18,15 @@
       <% end %>
       </ul>
     </div>
+    <script>
+      (function($){
+          $("<%= a[i].name.delete(' ') %>ThumbRow").mThumbnailScroller({
+            axis:"x",
+            type:"click-90",
+            theme:"buttons-out"
+          });
+        })(jQuery);
+    </script>
     <% rescue %>
     <% end %>
     <% end %>
