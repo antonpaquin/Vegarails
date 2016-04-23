@@ -8,6 +8,7 @@ import sys
 api_key = '8A508F4E2D203BF4'
 sys.setrecursionlimit(3500) #Allow pickling some very nested structures
 tvdb_file = '/var/www/html/Vegarails/support/tvdb.pk'
+populated = []
 
 try:
     f = open(tvdb_file,'rb')
@@ -20,7 +21,8 @@ finally:
 
 def getEpisodeThumb(show, season, episode):
     verifyCache(show, season, episode)
-    if localCache[show]['seasons'][season]['episodes'][episode]['thumb_url'] == '':
+    cached = localCache[show]['seasons'][season]['episodes'][episode]['thumb_url']
+    if cached == '' or cached == 'http://thetvdb.com/banners/None':
         populate(show)
     verifyCache(show, season, episode)
     return localCache[show]['seasons'][season]['episodes'][episode]['thumb_url']
@@ -72,6 +74,10 @@ def verifyCache(show, season=-1, episode=-1):
         }
 
 def populate(show):
+    if show in populated:
+        return
+    else:
+        populated.append(show)
     showId = getTvdbId(show)
     endpoint = 'http://thetvdb.com/api/{apikey}/series/{showId}/all/en.zip'.format(apikey=api_key, showId=showId)
     r = requests.get(endpoint)
