@@ -25,7 +25,10 @@ def getEpisodeThumb(show, season, episode):
     if cached == '' or cached == 'http://thetvdb.com/banners/None':
         populate(show)
     verifyCache(show, season, episode)
-    return localCache[show]['seasons'][season]['episodes'][episode]['thumb_url']
+    cached = localCache[show]['seasons'][season]['episodes'][episode]['thumb_url']
+    if cached == 'http://thetvdb.com/banners/None':
+        return ''
+    return cached
 
 def getShowThumb(show):
     verifyCache(show)

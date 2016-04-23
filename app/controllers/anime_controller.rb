@@ -66,8 +66,8 @@ class AnimeController < ApplicationController
         if Anime.where(name: a['name']).take == nil
           Anime.create(:name => a['name'], :tvdb_id => a['tvdb_id'])
           ids[a['name']] = Anime.where(name: a['name']).take.id
-          Dir.mkdir('/var/www/html/Vegarails/public/anime/'+a['name'])
           begin
+            Dir.mkdir('/var/www/html/Vegarails/public/anime/'+a['name'])
             open('/var/www/html/Vegarails/public/anime/'+a['name']+'/box.jpg', 'wb') do |file|
               file << open(a['thumb_url']).read
             end
@@ -76,8 +76,14 @@ class AnimeController < ApplicationController
         end
         a['seasons'].each do |s|
           s['episodes'].each do |e|
+            aName = a['name']
+            sNum = s['number'].to_s.rjust(2,'0')
+            eNum = e['number'].to_s.rjust(2,'0')
             if Aniepisode.where(anime_id: ids[a['name']], season: s['number'], episode: e['number']).take == nil
               doSyncEpisode(a, s, e, ids)
+            end
+            if !File.exists?("/var/www/html/Vegarails/public/anime/#{aName}/s#{sNum}e#{eNum}.jpg")
+              doWriteThumbnail(a, s, e)
             end
           end
         end
@@ -109,11 +115,10 @@ class AnimeController < ApplicationController
 
   # Not actions!
   def doSyncEpisode(anime, season, episode, ids)
-    require 'open-uri'
+    aName = anime['name']
     sNum = season['number'].to_s.rjust(2,'0')
     eNum = episode['number'].to_s.rjust(2,'0')
     frm = episode['format']
-    aName = anime['name']
     Aniepisode.create(
       :name => episode['name'],
       :anime_id => ids[anime['name']],
@@ -123,7 +128,17 @@ class AnimeController < ApplicationController
       :watched => false,
       :file => "/Media/Anime/#{aName}/Season #{sNum}/#{aName} - s#{sNum}e#{eNum}.#{frm}"
       )
+  end
+
+  def doWriteThumbnail(anime, season, episode)
+    require 'open-uri'
+    aName = anime['name']
+    sNum = season['number'].to_s.rjust(2,'0')
+    eNum = episode['number'].to_s.rjust(2,'0')
     begin
+      if episode['thumb_url'] == ''
+        raise
+      end
       open("/var/www/html/Vegarails/public/anime/#{aName}/s#{sNum}e#{eNum}.jpg", 'wb') do |file|
         file << open(episode['thumb_url']).read
       end
