@@ -10,7 +10,7 @@ def main():
     files = readTorrentDir()
     adjustNames(files)
     for f in files:
-        doMove(d.name, d.season, d.epNum, d.src)
+        doMove(f.name, f.season, f.epNum, f.src)
 
 def readTorrentDir():
     torrents = [f for f in os.listdir('/home/pi/drive/torrents/Anime-bot/complete') if f[0:14] == '[HorribleSubs]']
@@ -52,8 +52,11 @@ def getTorrentConfig():
     return conf
 
 def doMove(name, season, episode, src):
-    shutil.move('/home/pi/drive/torrents/Anime-bot/complete/'+src,
-                '/home/pi/drive/Media/Anime/'+name+'/Season '+rjust(season)+'/'+name+' - s'+rjust(season)+'e'+rjust(episode)+src[src.find('.'):])
+    ext = src[src.find('.')+1:]
+    srcFile = '/home/pi/drive/torrents/Anime-bot/complete/{}'.format(src)
+    destFile = '/home/pi/drive/Media/Anime/{0}/Season {1}/{0} - s{1}e{2}.{3}'.format(name, rjust(season), rjust(episode), ext)
+    shutil.move(srcFile, destFile)
+    os.symlink(destFile, srcFile)
 
 def rjust(num):
     return '0'*(2-len(str(num)))+str(num)
