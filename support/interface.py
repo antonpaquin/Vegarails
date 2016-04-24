@@ -14,6 +14,7 @@ def main():
 
 def readTorrentDir():
     torrents = [f for f in os.listdir('/home/pi/drive/torrents/Anime-bot/complete') if f[0:14] == '[HorribleSubs]']
+    #TODO make sure the file we're moving isn't a fucking symlink. Goddamn
     data = []
     for t in torrents:
         d = Struct()
