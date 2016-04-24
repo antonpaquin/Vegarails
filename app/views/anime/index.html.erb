@@ -13,7 +13,9 @@
       <ul>
       <% a[i].aniepisodes.each do |e| %>
         <li><a href='<%= "vlc:\"http://ohayo.vega.local"+ URI.escape(e.file) + "\""%>'>
-          <%= image_tag('/anime/' + a[i].name + '/s' + e.season.to_s.rjust(2,'0') + 'e' + e.episode.to_s.rjust(2,'0') + '.jpg', :class => "thumbImg" + (e.watched ? '' : ' unseen')) %></a>
+          <%= image_tag('/anime/' + a[i].name + '/s' + e.season.to_s.rjust(2,'0') + 'e' + e.episode.to_s.rjust(2,'0') + '.jpg',
+          :class => "thumbImg" + (e.watched ? '' : ' unseen'),
+          :data => {name: a[i].name, season: e.season, episode: e.episode}) %></a>
         </li>
       <% end %>
       </ul>

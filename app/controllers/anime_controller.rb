@@ -20,7 +20,7 @@ class AnimeController < ApplicationController
 
   def addEpisode
     begin
-      createEpisodeFromHttpParams(httpParams)
+      createEpisodeFromHttpParams(params)
       @success = true
     rescue Exception => e
       @success = false
@@ -53,6 +53,22 @@ class AnimeController < ApplicationController
           end #S - each
         end #A - each
       end #JSON - each
+      @success = true
+    rescue Exception => e
+      @success = false
+      @error = e.message
+      @trace = e.backtrace.join('\n')
+    end
+    render :apiResults, :layout => false
+  end
+
+  def log
+    begin
+      if params[:method] == "watched"
+        setWatchedEpisode(params, true)
+      else
+        raise ArgumentError, "Invalid log method"
+      end
       @success = true
     rescue Exception => e
       @success = false
@@ -147,6 +163,11 @@ class AnimeController < ApplicationController
       end
     rescue
     end
+  end
+
+  def setWatchedEpisode(params, value)
+    aid = Anime.where(name: params[:name]).take.id
+    Aniepisode.where(anime_id: aid, season: params[:season], episode: params[:episode]).take.update_attribute(:watched, value)
   end
 
   def episodeThumbnail(aName, sNum, eNum)

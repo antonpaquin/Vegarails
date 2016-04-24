@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   post 'anime/sync'
 
+  get 'anime/log'
+
   get 'home/show' => 'home#show'
   root 'home#show'
 
