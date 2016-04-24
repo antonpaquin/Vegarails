@@ -1,28 +1,8 @@
-== README
+Weebstack Vegarails.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an ongoing project that will eventually give me a complete interface to my "Vega" raspi media server.
+Vega is currently being used for mainly anime, also at some point in the future manga
+Thus "weebstack"
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+The goal of this is that I can have my media on the go wherever, and I don't need to stash it all on my laptop.
+Not really a space issue, just more of a "proper separation" of where I keep my stuff.
