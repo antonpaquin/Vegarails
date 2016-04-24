@@ -56,7 +56,6 @@ def doMove(name, season, episode, src):
     srcFile = '/home/pi/drive/torrents/Anime-bot/complete/{}'.format(src)
     destFile = '/home/pi/drive/Media/Anime/{0}/Season {1}/{0} - s{1}e{2}.{3}'.format(name, rjust(season), rjust(episode), ext)
     shutil.move(srcFile, destFile)
-    os.symlink(destFile, srcFile)
 
 def rjust(num):
     return '0'*(2-len(str(num)))+str(num)
