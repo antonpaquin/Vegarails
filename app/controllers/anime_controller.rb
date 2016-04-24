@@ -2,7 +2,7 @@ class AnimeController < ApplicationController
   protect_from_forgery with: :null_session
 
   def index
-    @anime = Anime.all;
+    @anime = Anime.where("sort_order > 0").order(:sort_order)
     #Sort anime somehow so that first things are first
   end
 
@@ -25,7 +25,7 @@ class AnimeController < ApplicationController
     rescue Exception => e
       @success = false
       @error = e.message
-      @trace = e.backtrace.inspect
+      @trace = e.backtrace.join('\n')
     end
     render :apiResults, :layout => false
   end
@@ -57,7 +57,7 @@ class AnimeController < ApplicationController
     rescue Exception => e
       @success = false
       @error = e.message
-      @trace = e.backtrace.inspect
+      @trace = e.backtrace.join('\n')
     end
     render :apiResults, :layout => false
   end
@@ -112,7 +112,7 @@ class AnimeController < ApplicationController
       :season => season['number'],
       :episode => episode['number'],
       :watched => false,
-      :file => episodeFile(aName, season['number'], episode['number'], episode['format'])
+      :file => episodeFile(anime['name'], season['number'], episode['number'], episode['format'])
       )
   end
 

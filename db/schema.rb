@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(version: 20160415201132) do
   create_table "aniepisodes", force: :cascade do |t|
     t.integer  "anime_id"
     t.string   "name"
-    t.string   "length"
     t.integer  "season"
     t.integer  "episode"
     t.boolean  "watched"
@@ -28,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160415201132) do
   create_table "animes", force: :cascade do |t|
     t.string   "name"
     t.integer  "tvdb_id"
+    t.integer  "sort_order"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
