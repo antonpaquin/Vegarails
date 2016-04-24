@@ -3,7 +3,6 @@ class CreateAniepisodes < ActiveRecord::Migration
     create_table :aniepisodes do |t|
       t.integer :anime_id
       t.string :name
-      t.string :length
       t.integer :season
       t.integer :episode
       t.boolean :watched
