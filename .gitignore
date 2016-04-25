@@ -25,3 +25,4 @@
 #Random torrents probably shouldn't be in VC
 /public/support/RSS\ downloader/files/*
 /public/support/RSS\ downloader/history.txt
+/public/support/tvdb.pk

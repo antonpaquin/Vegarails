@@ -6,3 +6,12 @@ Thus "weebstack"
 
 The goal of this is that I can have my media on the go wherever, and I don't need to stash it all on my laptop.
 Not really a space issue, just more of a "proper separation" of where I keep my stuff.
+
+TODO:
+The manga page
+Pick a music server (ampache?)
+Fix the anime ln bug
+Add a settings page
+At _some_ point make webcomics work again
+Consider some anime addShow automation
+Stick the anime runSupport.sh in crontab
