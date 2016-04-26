@@ -29,8 +29,8 @@ def adjustNames(data):
     conf = getTorrentConfig()
     for d in data:
         if d.name in conf.keys():
-            d.name = conf[d.name].name
             d.season = conf[d.name].season
+            d.name = conf[d.name].name
 
 def makePaths(data):
     for d in data:
@@ -56,11 +56,11 @@ def doMove(name, season, episode, src):
     ext = src[src.find('.')+1:]
     srcFile = '/home/pi/drive/torrents/Anime-bot/complete/{}'.format(src)
     destFile = '/home/pi/drive/Media/Anime/{0}/Season {1}/{0} - s{1}e{2}.{3}'.format(name, rjust(season), rjust(episode), ext)
-    if os.path.isFile(destFile):
+    if os.path.isfile(destFile):
         return #Hopefully this keeps me from invalidating 800Mb of traffic limit
     else:
         shutil.move(srcFile, destFile)
-        os.sym(destFile, srcFile)
+        os.symlink(destFile, srcFile)
 
 def rjust(num):
     return '0'*(2-len(str(num)))+str(num)
