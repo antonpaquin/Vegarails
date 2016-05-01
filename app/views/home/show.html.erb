@@ -5,6 +5,6 @@
 </div>
 <div class="vc" style="margin-top: 50px;">
   <% @services[:third].each do |service| %>
-    <div class="imgbox"><%= image_tag('/home/' + service + '.png') %></div>
+    <div class="imgbox"><a href="http://<%= service.downcase %>.antonpaquin.me"><%= image_tag('/home/' + service + '.png') %></a></div>
   <% end %>
 </div>
