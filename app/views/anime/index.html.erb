@@ -13,9 +13,16 @@
       <ul>
       <% a[i].aniepisodes.each do |e| %>
         <li><a href='<%= "vlc:\"http://ohayo.vega.local"+ URI.escape(e.file) + "\""%>'>
-          <%= image_tag('/anime/' + a[i].name + '/s' + e.season.to_s.rjust(2,'0') + 'e' + e.episode.to_s.rjust(2,'0') + '.jpg',
-          :class => "thumbImg" + (e.watched ? '' : ' unseen'),
-          :data => {name: a[i].name, season: e.season, episode: e.episode}) %></a>
+		  <% imgName = '/anime/' + a[i].name + '/s' + e.season.to_s.rjust(2,'0') + 'e' + e.episode.to_s.rjust(2,'0') + '.jpg' %>
+		  <% if File.exists?('./public' + imgName) %>
+			<%= image_tag(imgName,
+			:class => "thumbImg" + (e.watched ? '' : ' unseen'),
+			:data => {name: a[i].name, season: e.season, episode: e.episode}) %></a>
+		  <% else %> 
+		    <%= image_tag('/anime/' + a[i].name + '/box.jpg', 
+			:class => "thumbImg" + (e.watched ? '' : ' unseen'),
+			:data => {name: a[i].name, season: e.season, episode: e.episode}) %></a>
+		  <% end %>
         </li>
       <% end %>
       </ul>
@@ -27,6 +34,7 @@
             type:"click-90",
             theme:"buttons-out"
           });
+		  $("<%= a[i].name.delete(' ') %>ThumbRow").mThumbnailScroller("scrollTo","last");
         })(jQuery);
     </script>
     <% rescue %>
@@ -35,3 +43,4 @@
   </div>
   <% end %>
 </div>
+<!-- <%= Dir.pwd %> -->
